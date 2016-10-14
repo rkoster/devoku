@@ -1,0 +1,4 @@
+.bundle
+.vagrant
+*/packer_cache
+*/images
