@@ -15,13 +15,13 @@ if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 fi
 
 
-readonly identifier="odooku"
-readonly buildpack_path="${BUILDPACK_PATH:-https://github.com/adaptivdesign/odooku-buildpack}"
+readonly identifier="devoku"
+readonly buildpack_path="${DEVOKU_BUILDPACK_PATH}"
 
 readonly port=8000
 
-readonly local_share_dir="${ODOOKU_SHARE_DIR:-$PWD}"
-readonly local_prefix="${ODOOKU_LOCAL_PREFIX:-/home/$USER/$identifier}"
+readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"
+readonly local_prefix="${DEVOKU_LOCAL_PREFIX:-/home/$USER/$identifier}"
 readonly container_prefix="/$identifier"
 
 readonly local_app_dir="$local_prefix/app"
@@ -73,7 +73,7 @@ main() {
 	cmd-export info
 	cmd-export build
 	cmd-export clean
-	
+
 	cmd-export-ns env "Manage Herokuish environment"
 	cmd-export env-new
 	cmd-export env-set

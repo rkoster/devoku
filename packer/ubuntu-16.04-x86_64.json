@@ -45,7 +45,7 @@
       "guest_os_type": "Linux_64",
       "hard_drive_interface": "sata",
       "headless": "{{user `headless`}}",
-      "http_directory": "http/ubuntu-16.04",
+      "http_directory": "http",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -66,7 +66,9 @@
       "scripts": [
         "scripts/ubuntu/apt.sh",
         "scripts/ubuntu/network.sh",
-        "scripts/ubuntu/virtualbox.sh"
+        "scripts/ubuntu/virtualbox.sh",
+        "scripts/ubuntu/docker.sh",
+        "scripts/common/devoku.sh"
       ]
     }
   ],
