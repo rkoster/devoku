@@ -15,13 +15,13 @@ build() {
 	touch $local_slug_file
   docker run \
 		--rm \
-		-e BUILDPACK_URL=$buildpack_path \
 		-v $local_slug_file:$container_slug_file \
 		-v $local_app_dir:/tmp/app \
 		-v $local_cache_dir:/tmp/cache \
-		gliderlabs/herokuish \
+		-v $local_env_file:$container_env_file \
 		bin/bash -c \
-			"USER=herokuishuser /bin/herokuish buildpack build \
+			"source $container_env_file \
+			;USER=herokuishuser /bin/herokuish buildpack build \
 			&& USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish slug generate \
 			&& USER=herokuishuser /bin/herokuish slug export > $container_slug_file"
 
@@ -30,9 +30,10 @@ build() {
 	docker run \
 		-i \
 		--name $identifier \
-    gliderlabs/herokuish \
+		$build_args \
     bin/bash -c \
-      "USER=herokuishuser /bin/herokuish slug import <&0" < $local_slug_file
+			"$build_init \
+      USER=herokuishuser /bin/herokuish slug import <&0" < $local_slug_file
 
 	echo "Writing new Docker image" | indent
 	docker commit $identifier $identifier/$identifier:latest &> /dev/null || true

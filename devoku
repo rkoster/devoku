@@ -14,14 +14,19 @@ if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 	exit 2
 fi
 
+readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly identifier="devoku"
-readonly buildpack_path="${DEVOKU_BUILDPACK_PATH}"
+readonly port="${DEVOKU_PORT:-8000}"
 
-readonly port=8000
+if [ ! -f "$PWD/.env.template" ]; then
+  readonly env_template_file="$PWD/.env.template"
+else
+	readonly env_template_file="$DIR/.env.template"
+fi
 
 readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"
-readonly local_prefix="${DEVOKU_LOCAL_PREFIX:-/home/$USER/$identifier}"
+readonly local_prefix="${DEVOKU_LOCAL_PREFIX:-$PWD/.$identifier}"
 readonly container_prefix="/$identifier"
 
 readonly local_app_dir="$local_prefix/app"
@@ -32,24 +37,9 @@ readonly container_slug_file="$container_prefix/slug.tar.gz"
 readonly container_env_file="$container_prefix/.env"
 readonly container_share_dir="$container_prefix/share"
 
-readonly postgres_image="${ODOOKU_POSTGRES_IMAGE:-postgres:9.5}"
-readonly redis_image="${ODOOKU_POSTGRES_IMAGE:-redis:latest}"
+readonly postgres_image="${DEVOKU_POSTGRES_IMAGE:-postgres:9.5}"
+readonly redis_image="${DEVOKU_POSTGRES_IMAGE:-redis:latest}"
 readonly fake_s3_image="${ODOOKU_POSTGRES_IMAGE:-lphoward/fake-s3:latest}"
-
-
-readonly run_init="\
-/app/.heroku/odoo/bin/pip install --disable-pip-version-check --upgrade -e $container_share_dir/runtime/. &>/dev/null \
-;cp -a $container_share_dir/addons/. /app/.heroku/odoo/compat_addons/ \
-;cp -a $container_share_dir/patch/addons/. /app/.heroku/odoo/addons/ \
-;cp -a $container_share_dir/patch/openerp/. /app/.heroku/odoo/lib/python2.7/site-packages/openerp/ \
-;source $container_env_file"
-
-readonly run_args="\
---net host \
--v $local_share_dir:$container_share_dir \
--v $local_env_file:$container_env_file \
--e PORT=$port \
-$identifier/$identifier:latest"
 
 
 ensure-dirs() {
@@ -60,8 +50,9 @@ remove-dirs() {
 	rm -rf $local_app_dir $local_cache_dir
 }
 
-info() {
-	title "info"
+paths() {
+	title "Devoku paths"
+	echo "env template file: $env_template_file" |indent
 	echo "app repository: $local_app_dir" | indent
 	echo "build cache: $local_cache_dir" | indent
 	echo "env file: $local_env_file" | indent
@@ -70,7 +61,7 @@ info() {
 main() {
 	set -eo pipefail; [[ "$TRACE" ]] && set -x
 
-	cmd-export info
+	cmd-export paths
 	cmd-export build
 	cmd-export clean
 

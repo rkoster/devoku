@@ -17,9 +17,13 @@ run-shell() {
   declare desc="Start a shell inside a Herokuish container"
   docker run \
     --rm -it \
-    $run_args \
+    --net host \
+    -v $local_share_dir:$container_share_dir \
+    -v $local_env_file:$container_env_file \
+    -e PORT=$port \
+    $identifier/$identifier:latest \
     bin/bash -c \
-      "$run_init \
+      "source $container_env_file \
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec /bin/bash"
 }
 

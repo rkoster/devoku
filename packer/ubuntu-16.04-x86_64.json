@@ -1,17 +1,17 @@
 {
   "description": "Alpine Linux 3.4.0 Vagrant box",
   "variables": {
-    "boot_wait": "30s",
+    "boot_wait": "10s",
     "compression_level": "6",
-    "cpus": "1",
+    "cpus": "2",
     "disk_size": "8192",
-    "headless": "true",
+    "headless": "false",
     "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04.1-server-amd64.iso",
     "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
     "iso_checksum_type": "sha256",
-    "memory": "512",
+    "memory": "1024",
     "os": "ubuntu-16.04",
-    "ssh_timeout": "60m",
+    "ssh_timeout": "15m",
     "version": "0.1.0"
   },
   "builders": [
