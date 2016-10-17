@@ -1,12 +1,14 @@
 #!/bin/bash
-source "include/cmd.bash"
-source "include/fn.bash"
-source "include/utils.bash"
-source "include/commands/env.bash"
-source "include/commands/service.bash"
-source "include/commands/build.bash"
-source "include/commands/run.bash"
-source "include/commands/pg.bash"
+readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "$DIR/include/cmd.bash"
+source "$DIR/include/fn.bash"
+source "$DIR/include/utils.bash"
+source "$DIR/include/commands/env.bash"
+source "$DIR/include/commands/service.bash"
+source "$DIR/include/commands/build.bash"
+source "$DIR/include/commands/dyno.bash"
+source "$DIR/include/commands/pg.bash"
 
 if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 	echo "!! Your system Bash is out of date: $BASH_VERSION"
@@ -14,12 +16,10 @@ if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 	exit 2
 fi
 
-readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 readonly identifier="devoku"
 readonly port="${DEVOKU_PORT:-8000}"
 
-if [ ! -f "$PWD/.env.template" ]; then
+if [ -f "$PWD/.env.template" ]; then
   readonly env_template_file="$PWD/.env.template"
 else
 	readonly env_template_file="$DIR/.env.template"
@@ -37,10 +37,29 @@ readonly container_slug_file="$container_prefix/slug.tar.gz"
 readonly container_env_file="$container_prefix/.env"
 readonly container_share_dir="$container_prefix/share"
 
+readonly herokuish_image="${DEVOKU_HEROKUISH_IMAGE:-gliderlabs/herokuish:latest}"
 readonly postgres_image="${DEVOKU_POSTGRES_IMAGE:-postgres:9.5}"
 readonly redis_image="${DEVOKU_POSTGRES_IMAGE:-redis:latest}"
 readonly fake_s3_image="${ODOOKU_POSTGRES_IMAGE:-lphoward/fake-s3:latest}"
 
+check-docker() {
+	docker info > /dev/null 2>&1 || {
+		echo >&2 "Docker is not installed";
+		exit 100;
+	}
+}
+
+check-git() {
+	git version > /dev/null 2>&1 || {
+		echo >&2 "Git is not installed";
+		exit 110;
+	}
+
+	git rev-parse HEAD > /dev/null 2>&1 || {
+		echo >&2 "$PWD is not a valid git repository";
+		exit 111;
+	}
+}
 
 ensure-dirs() {
   mkdir -p $local_prefix $local_app_dir $local_cache_dir
@@ -70,11 +89,11 @@ main() {
 	cmd-export env-set
 	cmd-export env-print
 
-	cmd-export-ns run "Run Herokuish container"
-	cmd-export run-web
-	cmd-export run-worker
-	cmd-export run-exec
-	cmd-export run-shell
+	cmd-export-ns dyno "Run Herokuish container"
+	cmd-export dyno-web
+	cmd-export dyno-worker
+	cmd-export dyno-run
+	cmd-export dyno-shell
 
 	cmd-export-ns pg "Manage PostgreSQL"
 	cmd-export pg-psql
@@ -94,12 +113,14 @@ main() {
 
 
 	case "$1" in
-		exec)		run-exec "${@:2}";;
-		shell)		run-shell "${@:2}";;
-		web)		run-web "${@:2}";;
-		worker)		run-worker "${@:2}";;
+		run)		dyno-run "${@:2}";;
+		shell)		dyno-shell "${@:2}";;
+		web)		dyno-web "${@:2}";;
+		worker)		dyno-worker "${@:2}";;
 		*)			cmd-ns "" "$@";
 	esac
 }
 
-main "$@"
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+	main "$@"
+fi

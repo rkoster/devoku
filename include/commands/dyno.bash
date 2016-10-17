@@ -1,10 +1,12 @@
-run-exec() {
-  declare desc="Execute command inside a Herokuish container"
+dyno-run() {
+  declare desc="Run command inside a Herokuish container"
   declare cmd="$@"
   if [ -z "$cmd" ]; then
+    echo >&2 "No command given"
     exit 1
   fi
 
+  check-docker
   docker run \
     --rm -i \
     $run_args \
@@ -13,8 +15,10 @@ run-exec() {
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec $cmd"
 }
 
-run-shell() {
+dyno-shell() {
   declare desc="Start a shell inside a Herokuish container"
+  check-docker
+  check-env
   docker run \
     --rm -it \
     --net host \
@@ -27,9 +31,10 @@ run-shell() {
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec /bin/bash"
 }
 
-run-process() {
+dyno-process() {
   declare desc="Run Herokuish procfile process"
   declare process="${1:-web}"
+  check-docker
   docker rm -f -v $process &> /dev/null || true
   declare container=`docker run \
 		-d \
@@ -41,12 +46,12 @@ run-process() {
   docker logs -f $process
 }
 
-run-web() {
+dyno-web() {
   declare desc="Run Herokuish web process"
-  run-process "web"
+  dyno-process "web"
 }
 
-run-worker() {
+dyno-worker() {
   declare desc="Run Herokuish worker process"
-  run-process "worker"
+  dyno-process "worker"
 }

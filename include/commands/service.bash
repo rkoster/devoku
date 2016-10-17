@@ -1,37 +1,45 @@
 service-postgres-up() {
   declare desc="Run the PostgreSQL service"
-  docker run \
+  check-docker
+  (docker run \
     --name $identifier-postgres \
     --restart always \
     -e POSTGRES_PASSWORD=$identifier \
     -e POSTGRES_USER=$identifier \
     -d \
     --net host \
-    $postgres_image
+    $postgres_image &> /dev/null) &
+  long-running $! "Starting service $identifier-postgres"
 }
 
 service-redis-up() {
   declare desc="Run the Redis service"
-  docker run \
+  check-docker
+  (docker run \
     --name $identifier-redis \
     --restart always \
     -d \
     --net host \
-    $redis_image
+    $redis_image &> /dev/null) &
+  long-running $! "Starting service $identifier-redis"
 }
 
 service-s3-up() {
   declare desc="Run the Fake S3 service"
-  docker run \
+  check-docker
+  (docker run \
     --name $identifier-s3 \
     --restart always \
     -d \
     --net host \
-    $fake_s3_image
+    $fake_s3_image &> /dev/null) &
+  long-running $! "Starting service $identifier-s3"
 }
 
 service-down() {
-  docker rm -f -v $1 &> /dev/null || true
+  check-docker
+  (docker rm -f -v $1 &> /dev/null || true) &
+  long-running $! "Removing service $1"
 }
 
 service-redis-down() {

@@ -14,6 +14,7 @@ parse-database-url() {
 }
 
 pg-run() {
+  check-docker
   docker run \
 		--rm \
 		-i \
@@ -26,6 +27,7 @@ pg-run() {
 
 pg-psql() {
   declare desc="Start a psql shell for the configured database"
+  check-env
   source $local_env_file
   parse-database-url $DATABASE_URL
   pg-run "psql -U ${db_user} -w -h ${db_host} -p ${db_port} -d ${db_name}" "-t"
@@ -33,6 +35,7 @@ pg-psql() {
 
 pg-createdb() {
   declare desc="Create the configured database"
+  check-env
   source $local_env_file
   parse-database-url $DATABASE_URL
   pg-run "createdb -U $db_user -w -h $db_host -p $db_port $db_name"
@@ -40,6 +43,7 @@ pg-createdb() {
 
 pg-dropdb() {
   declare desc="Drop the configured database"
+  check-env
   source $local_env_file
   parse-database-url $DATABASE_URL
   pg-run "dropdb -U $db_user -w -h $db_host -p $db_port $db_name"

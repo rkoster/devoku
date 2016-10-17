@@ -1,10 +1,17 @@
+check-env() {
+  if [ ! -f "$local_env_file" ]; then
+    echo >&2 "Env is not configured"
+    exit 10
+  fi
+}
+
 env-template() {
   eval "echo \"$(cat $env_template_file)\""
 }
 
 env-new() {
 	declare desc="Create a new environment"
-	declare unique=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1)
+	declare unique=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 	ensure-dirs
 	title "Creating new environment"
 	env-template > $local_env_file
@@ -22,5 +29,7 @@ EOF
 
 env-print() {
 	declare desc="Print environment variables"
-	echo `cat $local_env_file`
+  ensure-dirs
+  check-env
+  cat $local_env_file
 }
