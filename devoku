@@ -1,5 +1,5 @@
 #!/bin/bash
-readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source "$DIR/include/cmd.bash"
 source "$DIR/include/fn.bash"
@@ -20,8 +20,10 @@ readonly identifier="devoku"
 readonly port="${DEVOKU_PORT:-8000}"
 
 if [ -f "$PWD/.env.template" ]; then
+	# Use custom env.template
   readonly env_template_file="$PWD/.env.template"
 else
+	# Use default env.template
 	readonly env_template_file="$DIR/.env.template"
 fi
 
@@ -29,11 +31,14 @@ readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"
 readonly local_prefix="${DEVOKU_LOCAL_PREFIX:-$PWD/.$identifier}"
 readonly container_prefix="/$identifier"
 
-readonly local_app_dir="$local_prefix/app"
-readonly local_cache_dir="$local_prefix/cache"
-readonly local_slug_file="$local_prefix/slug.tar.gz"
+readonly local_import_tar="$local_prefix/import.tar.gz"
+readonly local_cache_tar="$local_prefix/cache.tar.gz"
+readonly local_slug_tar="$local_prefix/slug.tar.gz"
 readonly local_env_file="$local_prefix/.env"
-readonly container_slug_file="$container_prefix/slug.tar.gz"
+
+readonly container_import_tar="$container_prefix/import.tar.gz"
+readonly container_cache_tar="$container_prefix/cache.tar.gz"
+readonly container_slug_tar="$container_prefix/slug.tar.gz"
 readonly container_env_file="$container_prefix/.env"
 readonly container_share_dir="$container_prefix/share"
 
@@ -41,6 +46,9 @@ readonly herokuish_image="${DEVOKU_HEROKUISH_IMAGE:-gliderlabs/herokuish:latest}
 readonly postgres_image="${DEVOKU_POSTGRES_IMAGE:-postgres:9.5}"
 readonly redis_image="${DEVOKU_POSTGRES_IMAGE:-redis:latest}"
 readonly fake_s3_image="${ODOOKU_POSTGRES_IMAGE:-lphoward/fake-s3:latest}"
+
+readonly local_user="${DEVOKU_LOCAL_USER:-$USER}"
+readonly local_group="${DEVOKU_LOCAL_GROUP:-docker}"
 
 check-docker() {
 	docker info > /dev/null 2>&1 || {
@@ -55,25 +63,23 @@ check-git() {
 		exit 110;
 	}
 
-	git rev-parse HEAD > /dev/null 2>&1 || {
+	(cd $local_share_dir && git rev-parse HEAD > /dev/null 2>&1 || {
 		echo >&2 "$PWD is not a valid git repository";
 		exit 111;
-	}
+	})
 }
 
 ensure-dirs() {
-  mkdir -p $local_prefix $local_app_dir $local_cache_dir
+  mkdir -p $local_prefix
 }
 
 remove-dirs() {
-	rm -rf $local_app_dir $local_cache_dir
+	rm $local_import_tar $local_cache_tar $local_slug_tar &> /dev/null || true
 }
 
 paths() {
 	title "Devoku paths"
 	echo "env template file: $env_template_file" |indent
-	echo "app repository: $local_app_dir" | indent
-	echo "build cache: $local_cache_dir" | indent
 	echo "env file: $local_env_file" | indent
 }
 

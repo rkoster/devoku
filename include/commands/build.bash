@@ -10,26 +10,30 @@ build() {
 	docker rm -f -v $identifier &> /dev/null || true
 	docker rmi -f $identifier/$identifier:latest &> /dev/null || true
 
-	declare commit=`(git rev-parse HEAD)`
-	echo "Using local commit $commit" | indent
-	rm -rf $local_app_dir
-	mkdir -p $local_app_dir
-	git archive --format=tar $commit | (cd $local_app_dir/ && tar xf -)
+	touch $local_import_tar $local_cache_tar $local_slug_tar
+	(cd $local_share_dir && {
+		declare commit=`(git rev-parse HEAD)`;
+		echo "Using local commit $commit" | indent;
+		git archive --output=$local_import_tar $commit
+	})
 
 	title "Building slug"
-	touch $local_slug_file
   docker run \
 		--rm \
-		-v $local_slug_file:$container_slug_file \
-		-v $local_app_dir:/tmp/app \
-		-v $local_cache_dir:/tmp/cache \
+		-v $local_import_tar:$container_import_tar \
+		-v $local_cache_tar:$container_cache_tar \
+		-v $local_slug_tar:$container_slug_tar \
 		-v $local_env_file:$container_env_file \
 		$herokuish_image \
 		bin/bash -c \
 			"source $container_env_file \
-			;USER=herokuishuser /bin/herokuish buildpack build \
+			&& mkdir -p /tmp/app /tmp/cache \
+			&& if [ -s $container_cache_tar ]; then tar -xzf $container_cache_tar -C /tmp/cache; fi \
+			&& tar -xzf $container_import_tar -C /tmp/app \
+			&& USER=herokuishuser /bin/herokuish buildpack build \
+			&& tar -czf $container_cache_tar -C /tmp/cache . \
 			&& USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish slug generate \
-			&& USER=herokuishuser /bin/herokuish slug export > $container_slug_file"
+			&& USER=herokuishuser /bin/herokuish slug export > $container_slug_tar"
 
 	title "Building Docker image"
 	echo "Importing slug" | indent
@@ -38,7 +42,7 @@ build() {
 		--name $identifier \
 		$herokuish_image \
     bin/bash -c \
-      "USER=herokuishuser /bin/herokuish slug import <&0" < $local_slug_file
+      "USER=herokuishuser /bin/herokuish slug import <&0" < $local_slug_tar
 
 	echo "Writing new Docker image" | indent
 	docker commit $identifier $identifier/$identifier:latest &> /dev/null || true
