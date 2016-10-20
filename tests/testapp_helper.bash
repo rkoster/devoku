@@ -1,10 +1,8 @@
-#!/bin/bash
-
 setup-testapp() {
   TEST_DIR=$BATS_TMPDIR/devokutestapp
   teardown-testapp
   mkdir -p $TEST_DIR
-  DEVOKU=$PWD/devoku
+  DEVOKU=$PWD/bin/devoku
   cd $TEST_DIR
 }
 

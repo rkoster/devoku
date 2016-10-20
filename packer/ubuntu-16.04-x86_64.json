@@ -64,10 +64,12 @@
       "type": "shell",
       "scripts": [
         "scripts/ubuntu/apt.sh",
-        "scripts/ubuntu/network.sh",
         "scripts/ubuntu/virtualbox.sh",
         "scripts/ubuntu/docker.sh",
-        "scripts/common/devoku.sh"
+        "scripts/common/ssh.sh",
+        "scripts/common/vagrant.sh",
+        "scripts/common/devoku.sh",
+        "scripts/common/zero.sh"
       ]
     }
   ],

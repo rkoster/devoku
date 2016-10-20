@@ -1,5 +1,4 @@
-.. image:: https://travis-ci.org/adaptivdesign/devoku.svg?branch=master
-    :target: https://travis-ci.org/adaptivdesign/devoku
+[![Build Status](https://travis-ci.org/adaptivdesign/devoku.svg?branch=master)](https://travis-ci.org/adaptivdesign/devoku)
 
-# devoku
+# Devoku
 Herokuish development environment

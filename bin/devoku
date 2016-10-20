@@ -1,20 +1,22 @@
-#!/bin/bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-source "$DIR/include/cmd.bash"
-source "$DIR/include/fn.bash"
-source "$DIR/include/utils.bash"
-source "$DIR/include/commands/env.bash"
-source "$DIR/include/commands/service.bash"
-source "$DIR/include/commands/build.bash"
-source "$DIR/include/commands/dyno.bash"
-source "$DIR/include/commands/pg.bash"
+#!/usr/bin/env bash
 
 if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 	echo "!! Your system Bash is out of date: $BASH_VERSION"
 	echo "!! Please upgrade to Bash 4 or greater."
 	exit 2
 fi
+
+readonly bin_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly include_dir="$bin_dir/../include"
+
+source "$include_dir/cmd.bash"
+source "$include_dir/fn.bash"
+source "$include_dir/utils.bash"
+source "$include_dir/commands/env.bash"
+source "$include_dir/commands/service.bash"
+source "$include_dir/commands/build.bash"
+source "$include_dir/commands/dyno.bash"
+source "$include_dir/commands/pg.bash"
 
 readonly identifier="devoku"
 readonly port="${DEVOKU_PORT:-8000}"
@@ -24,7 +26,7 @@ if [ -f "$PWD/.env.template" ]; then
   readonly env_template_file="$PWD/.env.template"
 else
 	# Use default env.template
-	readonly env_template_file="$DIR/.env.template"
+	readonly env_template_file="$include_dir/.env.template"
 fi
 
 readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"

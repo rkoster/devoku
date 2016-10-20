@@ -9,6 +9,7 @@ DEVOKU_SHARE_DIR=/vagrant
 EOF
 source /etc/environment
 
+devoku service postgres up
 devoku env new
 devoku pg createdb
 
