@@ -1,0 +1,15 @@
+dist: trusty
+language: bash
+
+services:
+  - docker
+
+before_install:
+  - sudo add-apt-repository ppa:duggan/bats --yes
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq bats
+  - curl -L -o packer.zip https://releases.hashicorp.com/packer/0.10.0/packer_0.10.0_linux_amd64.zip && unzip -d bin packer.zip
+  - export PATH=$PATH:$PWD/bin/
+
+script:
+  - bats tests
