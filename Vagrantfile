@@ -4,10 +4,10 @@
 
 $INIT = <<SCRIPT
 
-sudo tee /etc/environment -a > /dev/null <<EOF
+tee ~/.bashrc -a > /dev/null <<EOF
 DEVOKU_SHARE_DIR=/vagrant
 EOF
-source /etc/environment
+source ~/.bashrc
 
 devoku service postgres up
 devoku env new
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "adaptivdesign/devoku"
   config.vm.box_url = "packer/images/ubuntu-16.04-virtualbox-0.1.0.box"
-  config.vm.synced_folder '.', '/vagrant'
+  config.vm.synced_folder '.', '/vagrant/example'
   config.vm.provision "shell", inline: $INIT, privileged: false
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
