@@ -1,5 +1,6 @@
 .bundle
 .vagrant
 .devoku
+site
 packer/packer_cache
 packer/images
