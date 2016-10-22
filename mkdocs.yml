@@ -1,0 +1,13 @@
+site_name: Devoku
+theme: material
+
+extra:
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  author:
+    github: 'my-github-handle'
+    twitter: 'my-twitter-handle'
+  palette:
+    primary: 'deep purple'
+    accent: 'light purple'
