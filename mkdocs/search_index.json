@@ -1,0 +1,54 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Devoku\n\n\nHerokuish development environment for just about any project.\n\n\nGetting started\n\n\nPrerequisites\n\n\n\n\nUp to date version of \nVagrant\n.\n\n\nA project under Git version control.\n\n\nA valid Heroku project.\n\n\n\n\nVagrantfile\n\n\nYour Vagrantfile should contain the following:\n\n\nVagrant.configure(2) do |config|\n  config.vm.box = \nadaptivdesign/devoku\n\n  config.vm.synced_folder '.', '/vagrant'\n\n  ...\n\n  # Dyno http port\n  config.vm.network \nforwarded_port\n, guest: 8000, host: 8000\n  # S3 http port\n  config.vm.network \nforwarded_port\n, guest: 4569, host: 4569\n\nend\n\n\n\n\nUsing Devoku\n\n\nOnce your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.\n\n\n$ vagrant ssh\n$ cd /vagrant\n\n\n\n\nSetup environment variables\n\n\nThe first thing you want to do is setup a new Devoku environment, this is\na file containing environment variables required by your App. Devoku creates\nthis file for you using the \ndevoku env new\n command.\n\n\n$ devoku env new\n$ devoku env print\n\n\n\n\nBuild the image\n\n\nIf your build requires certain environment variables make sure to set them\nbefore building. Once this is done we can start to build our Herokuish Docker\nimage.\n\n\n$ devoku build\n\n\n\n\nSetup backing services\n\n\nBefore running the app, we need to ensure all backing services are running.\nMost apps will require a Postgres Database, so lets provide the service.\nNotice that when you created your environment, it automatically generated a\n\nDATABASE_URL\n for you. We are going to start a Postgres server and create an\nempty database with just the following commands:\n\n\n$ devoku service postgres up\n$ devoku pg createdb\n\n\n\n\nRun your app\n\n\nEverything is set, now simply run:\n\n\n$ devoku web\n\n\n\n\nThis starts a single web dyno available at \nhttp://localhost:8000", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#devoku", 
+            "text": "Herokuish development environment for just about any project.", 
+            "title": "Devoku"
+        }, 
+        {
+            "location": "/#getting-started", 
+            "text": "", 
+            "title": "Getting started"
+        }, 
+        {
+            "location": "/#prerequisites", 
+            "text": "Up to date version of  Vagrant .  A project under Git version control.  A valid Heroku project.", 
+            "title": "Prerequisites"
+        }, 
+        {
+            "location": "/#vagrantfile", 
+            "text": "Your Vagrantfile should contain the following:  Vagrant.configure(2) do |config|\n  config.vm.box =  adaptivdesign/devoku \n  config.vm.synced_folder '.', '/vagrant'\n\n  ...\n\n  # Dyno http port\n  config.vm.network  forwarded_port , guest: 8000, host: 8000\n  # S3 http port\n  config.vm.network  forwarded_port , guest: 4569, host: 4569\n\nend", 
+            "title": "Vagrantfile"
+        }, 
+        {
+            "location": "/#using-devoku", 
+            "text": "Once your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.  $ vagrant ssh\n$ cd /vagrant", 
+            "title": "Using Devoku"
+        }, 
+        {
+            "location": "/#setup-environment-variables", 
+            "text": "The first thing you want to do is setup a new Devoku environment, this is\na file containing environment variables required by your App. Devoku creates\nthis file for you using the  devoku env new  command.  $ devoku env new\n$ devoku env print", 
+            "title": "Setup environment variables"
+        }, 
+        {
+            "location": "/#build-the-image", 
+            "text": "If your build requires certain environment variables make sure to set them\nbefore building. Once this is done we can start to build our Herokuish Docker\nimage.  $ devoku build", 
+            "title": "Build the image"
+        }, 
+        {
+            "location": "/#setup-backing-services", 
+            "text": "Before running the app, we need to ensure all backing services are running.\nMost apps will require a Postgres Database, so lets provide the service.\nNotice that when you created your environment, it automatically generated a DATABASE_URL  for you. We are going to start a Postgres server and create an\nempty database with just the following commands:  $ devoku service postgres up\n$ devoku pg createdb", 
+            "title": "Setup backing services"
+        }, 
+        {
+            "location": "/#run-your-app", 
+            "text": "Everything is set, now simply run:  $ devoku web  This starts a single web dyno available at  http://localhost:8000", 
+            "title": "Run your app"
+        }
+    ]
+}
