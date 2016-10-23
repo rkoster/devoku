@@ -11,7 +11,7 @@ dyno-run() {
     --rm -i \
     $run_args \
     bin/bash -c \
-      "$run_init \
+      "DEVOKU_CONTEXT=run source $container_env_file \
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec $cmd"
 }
 
@@ -27,7 +27,7 @@ dyno-shell() {
     -e PORT=$port \
     $identifier/$identifier:latest \
     bin/bash -c \
-      "source $container_env_file \
+      "DEVOKU_CONTEXT=run source $container_env_file \
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec /bin/bash"
 }
 
@@ -41,7 +41,7 @@ dyno-process() {
 		--name $process \
 		$run_args \
 		bin/bash -c \
-			"$run_init \
+			"DEVOKU_CONTEXT=run source $container_env_file \
 			;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile start $process"`
   docker logs -f $process
 }

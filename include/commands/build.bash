@@ -24,7 +24,7 @@ build() {
 		-v $local_env_file:$container_env_file \
 		$herokuish_image \
 		bin/bash -c \
-			"source $container_env_file \
+			"DEVOKU_CONTEXT=build source $container_env_file \
 			&& mkdir -p /tmp/app /tmp/cache \
 			&& if [ -s $container_cache_tar ]; then tar -xzf $container_cache_tar -C /tmp/cache; fi \
 			&& tar -xzf $container_import_tar -C /tmp/app \
