@@ -29,20 +29,20 @@ else
 	readonly env_template_file="$include_dir/.env.template"
 fi
 
-readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"
 readonly local_prefix="${DEVOKU_LOCAL_PREFIX:-$PWD/.$identifier}"
-readonly container_prefix="/$identifier"
-
 readonly local_import_tar="$local_prefix/import.tar.gz"
 readonly local_cache_tar="$local_prefix/cache.tar.gz"
 readonly local_slug_tar="$local_prefix/slug.tar.gz"
 readonly local_env_file="$local_prefix/.env"
+readonly local_share_dir="${DEVOKU_SHARE_DIR:-$PWD}"
 
+readonly container_prefix="/$identifier"
 readonly container_import_tar="$container_prefix/import.tar.gz"
 readonly container_cache_tar="$container_prefix/cache.tar.gz"
 readonly container_slug_tar="$container_prefix/slug.tar.gz"
 readonly container_env_file="$container_prefix/.env"
 readonly container_share_dir="$container_prefix/share"
+
 
 readonly herokuish_image="${DEVOKU_HEROKUISH_IMAGE:-gliderlabs/herokuish:latest}"
 readonly postgres_image="${DEVOKU_POSTGRES_IMAGE:-postgres:9.5}"
@@ -65,10 +65,10 @@ check-git() {
 		exit 110;
 	}
 
-	(cd $local_share_dir && git rev-parse HEAD > /dev/null 2>&1 || {
+	git rev-parse HEAD > /dev/null 2>&1 || {
 		echo >&2 "$PWD is not a valid git repository";
 		exit 111;
-	})
+	}
 }
 
 ensure-dirs() {

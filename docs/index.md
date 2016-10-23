@@ -17,7 +17,7 @@ Your Vagrantfile should contain the following:
 ```
 Vagrant.configure(2) do |config|
   config.vm.box = "adaptivdesign/devoku"
-  config.vm.synced_folder '.', '/vagrant'
+  config.vm.synced_folder ".", "/vagrant"
 
   ...
 

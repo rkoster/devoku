@@ -11,11 +11,9 @@ build() {
 	docker rmi -f $identifier/$identifier:latest &> /dev/null || true
 
 	touch $local_import_tar $local_cache_tar $local_slug_tar
-	(cd $local_share_dir && {
-		declare commit=`(git rev-parse HEAD)`;
-		echo "Using local commit $commit" | indent;
-		git archive --output=$local_import_tar $commit
-	})
+	declare commit=`(git rev-parse HEAD)`;
+	echo "Using local commit $commit" | indent;
+	git archive --output=$local_import_tar $commit
 
 	title "Building slug"
   docker run \
