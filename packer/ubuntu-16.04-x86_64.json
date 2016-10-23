@@ -1,5 +1,5 @@
 {
-  "description": "Alpine Linux 3.4.0 Vagrant box",
+  "description": "Devoku devopment box (Ubuntu 16.04)",
   "variables": {
     "boot_wait": "10s",
     "compression_level": "6",
@@ -78,7 +78,7 @@
       "compression_level": "{{user `compression_level`}}",
       "keep_input_artifact": false,
       "only": ["virtualbox"],
-      "output": "images/{{user `os`}}-{{.Provider}}-{{user `version`}}.box",
+      "output": "images/devoku-{{user `os`}}-{{.Provider}}-{{user `version`}}.box",
       "type": "vagrant"
     }
   ]

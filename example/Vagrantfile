@@ -5,13 +5,9 @@
 $INIT = <<SCRIPT
 
 tee ~/.bashrc -a > /dev/null <<EOF
-DEVOKU_SHARE_DIR=/vagrant
+
 EOF
 source ~/.bashrc
-
-devoku service postgres up
-devoku env new
-devoku pg createdb
 
 SCRIPT
 
@@ -26,7 +22,7 @@ Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
 
   config.vm.box = "adaptivdesign/devoku"
-  config.vm.box_url = "packer/images/ubuntu-16.04-virtualbox-0.1.0.box"
+  config.vm.box_url = "../packer/images/devoku-ubuntu-16.04-virtualbox-0.1.0.box"
   config.vm.synced_folder '.', '/vagrant'
   config.vm.provision "shell", inline: $INIT, privileged: false
 
