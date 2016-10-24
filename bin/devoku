@@ -9,15 +9,6 @@ fi
 readonly bin_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 readonly include_dir="$bin_dir/../include"
 
-source "$include_dir/cmd.bash"
-source "$include_dir/fn.bash"
-source "$include_dir/utils.bash"
-source "$include_dir/commands/env.bash"
-source "$include_dir/commands/service.bash"
-source "$include_dir/commands/build.bash"
-source "$include_dir/commands/dyno.bash"
-source "$include_dir/commands/pg.bash"
-
 readonly identifier="devoku"
 readonly port="${DEVOKU_PORT:-8000}"
 
@@ -84,6 +75,15 @@ paths() {
 	echo "env template file: $env_template_file" |indent
 	echo "env file: $local_env_file" | indent
 }
+
+source "$include_dir/cmd.bash"
+source "$include_dir/fn.bash"
+source "$include_dir/utils.bash"
+source "$include_dir/commands/env.bash"
+source "$include_dir/commands/service.bash"
+source "$include_dir/commands/build.bash"
+source "$include_dir/commands/dyno.bash"
+source "$include_dir/commands/pg.bash"
 
 main() {
 	set -eo pipefail; [[ "$TRACE" ]] && set -x
