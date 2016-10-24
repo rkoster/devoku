@@ -69,6 +69,7 @@
         "scripts/common/ssh.sh",
         "scripts/common/vagrant.sh",
         "scripts/common/devoku.sh",
+        "scripts/ubuntu/devoku.sh",
         "scripts/common/zero.sh"
       ]
     }
