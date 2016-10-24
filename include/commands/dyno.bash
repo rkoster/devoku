@@ -19,7 +19,7 @@ dyno-run() {
     $run_args \
     bin/bash -c \
       "DEVOKU_CONTEXT=run source $container_env_file \
-      ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec $cmd"
+      ;USER=herokuishuser /bin/herokuish procfile exec $cmd"
 }
 
 dyno-shell() {
@@ -32,23 +32,24 @@ dyno-shell() {
     $run_args \
     bin/bash -c \
       "DEVOKU_CONTEXT=run source $container_env_file \
-      ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec /bin/bash"
+      ;USER=herokuishuser /bin/herokuish procfile exec /bin/bash"
 }
 
 dyno-process() {
   declare desc="Run Herokuish procfile process"
-  declare process="$identifier-${1:-web}"
+  declare process="${1:-web}"
+  declare name="$identifier-$process"
   check-docker
   check-env
-  docker rm -f -v $process &> /dev/null || true
+  docker rm -f -v $name &> /dev/null || true
   declare container=`docker run \
-		-d --name $process \
+		-d --name $name \
     -e PORT=$port \
 		 $run_args \
 		bin/bash -c \
 			"DEVOKU_CONTEXT=run source $container_env_file \
-			;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile start $process"`
-  docker logs -f $process
+			;USER=herokuishuser /bin/herokuish procfile start $process"`
+  docker logs -f $name
 }
 
 dyno-web() {
