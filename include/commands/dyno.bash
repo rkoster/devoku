@@ -1,3 +1,9 @@
+declare run_args="\
+--net host \
+-v $local_share_dir:$container_share_dir \
+-v $local_env_file:$container_env_file \
+$identifier/$identifier:latest"
+
 dyno-run() {
   declare desc="Run command inside a Herokuish container"
   declare cmd="$@"
@@ -21,11 +27,8 @@ dyno-shell() {
   check-env
   docker run \
     --rm -it \
-    --net host \
-    -v $local_share_dir:$container_share_dir \
-    -v $local_env_file:$container_env_file \
     -e PORT=$port \
-    $identifier/$identifier:latest \
+    $run_args \
     bin/bash -c \
       "DEVOKU_CONTEXT=run source $container_env_file \
       ;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile exec /bin/bash"
@@ -37,9 +40,9 @@ dyno-process() {
   check-docker
   docker rm -f -v $process &> /dev/null || true
   declare container=`docker run \
-		-d \
-		--name $process \
-		$run_args \
+		-d --name $identifier-$process \
+    -e PORT=$port \
+		 $run_args \
 		bin/bash -c \
 			"DEVOKU_CONTEXT=run source $container_env_file \
 			;USER=herokuishuser IMPORT_PATH=/nosuchpath /bin/herokuish procfile start $process"`
