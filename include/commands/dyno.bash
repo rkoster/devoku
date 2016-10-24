@@ -13,6 +13,7 @@ dyno-run() {
   fi
 
   check-docker
+  check-env
   docker run \
     --rm -i \
     $run_args \
@@ -36,11 +37,12 @@ dyno-shell() {
 
 dyno-process() {
   declare desc="Run Herokuish procfile process"
-  declare process="${1:-web}"
+  declare process="$identifier-${1:-web}"
   check-docker
+  check-env
   docker rm -f -v $process &> /dev/null || true
   declare container=`docker run \
-		-d --name $identifier-$process \
+		-d --name $process \
     -e PORT=$port \
 		 $run_args \
 		bin/bash -c \
