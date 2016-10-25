@@ -1,13 +1,34 @@
 site_name: Devoku
+site_description: Herokuish development environment for just about any project
+site_author: Raymond Reggers
+site_url: http://adaptivdesign.github.io/devoku/
+
 theme: material
+
+# Repository
+repo_name: GitHub
+repo_url: https://github.com/adaptivdesign/devoku
+
+# Copyright
+copyright: Copyright (c) 2016 Raymond Reggers
 
 extra:
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-  author:
-    github: 'my-github-handle'
-    twitter: 'my-twitter-handle'
   palette:
     primary: 'deep purple'
     accent: 'light purple'
+
+# Extensions
+markdown_extensions:
+  - codehilite:
+
+  - toc:
+      permalink: '#'
+
+# Page tree
+pages:
+  - Devoku: index.md
+  - Getting started: getting-started.md
+  - Commands: commands.md

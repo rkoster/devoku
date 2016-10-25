@@ -25,13 +25,13 @@ long-running()
     while kill -0 $pid 2> /dev/null; do
 			for i in "${spin[@]}"
 		  do
-        echo -ne "\b\e[92m$i\e[39m"
+        echo -e "\b\e[92m$i\e[39m"
         sleep $delay
 		  done
     done
 
 		# Disable the trap on a normal exit.
 		trap - EXIT
-		
+
 		echo -e "\b\e[92m[DONE]\e[39m"
 }
