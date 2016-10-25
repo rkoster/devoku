@@ -3,7 +3,9 @@
 
 
 $INIT = <<SCRIPT
+#!/usr/bin/env bash
 
+set -exu
 tee ~/.bashrc -a > /dev/null <<EOF
 
 EOF
