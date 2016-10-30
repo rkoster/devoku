@@ -11,7 +11,7 @@ env-template() {
 
 env-new() {
 	declare desc="Create a new environment"
-	declare unique=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+	declare unique=$(cat /dev/urandom | base64 | tr -dc 'a-z0-9' | fold -w 16 | head -n 1)
 	ensure-dirs
 	title "Creating new environment"
 	env-template > $local_env_file

@@ -23,7 +23,7 @@ extra:
 # Extensions
 markdown_extensions:
   - codehilite:
-
+  - admonition:
   - toc:
       permalink: '#'
 
@@ -32,3 +32,4 @@ pages:
   - Devoku: index.md
   - Getting started: getting-started.md
   - Commands: commands.md
+  - Custom Environment: custom-environment.md

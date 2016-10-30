@@ -34,14 +34,11 @@ readonly container_slug_tar="$container_prefix/slug.tar.gz"
 readonly container_env_file="$container_prefix/.env"
 readonly container_share_dir="$container_prefix/share"
 
-
 readonly herokuish_image="${DEVOKU_HEROKUISH_IMAGE:-gliderlabs/herokuish:latest}"
 readonly postgres_image="${DEVOKU_POSTGRES_IMAGE:-postgres:9.5}"
 readonly redis_image="${DEVOKU_POSTGRES_IMAGE:-redis:latest}"
 readonly fake_s3_image="${ODOOKU_POSTGRES_IMAGE:-lphoward/fake-s3:latest}"
 
-readonly local_user="${DEVOKU_LOCAL_USER:-$USER}"
-readonly local_group="${DEVOKU_LOCAL_GROUP:-docker}"
 
 check-docker() {
 	docker info > /dev/null 2>&1 || {
