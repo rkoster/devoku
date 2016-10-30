@@ -3,8 +3,32 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-10-22</lastmod>
+     <loc>http://adaptivdesign.github.io/devoku//</loc>
+     <lastmod>2016-10-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://adaptivdesign.github.io/devoku//getting-started/</loc>
+     <lastmod>2016-10-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://adaptivdesign.github.io/devoku//commands/</loc>
+     <lastmod>2016-10-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://adaptivdesign.github.io/devoku//custom-environment/</loc>
+     <lastmod>2016-10-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

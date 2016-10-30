@@ -9,15 +9,21 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Devoku</title>
+        <title>Devoku - Herokuish development environment for just about any project</title>
       
       
+        <meta name="description" content="Herokuish development environment for just about any project">
       
+      
+        <link rel="canonical" href="http://adaptivdesign.github.io/devoku/">
+      
+      
+        <meta name="author" content="Raymond Reggers">
       
     
-    <meta property="og:url" content="None">
+    <meta property="og:url" content="http://adaptivdesign.github.io/devoku/">
     <meta property="og:title" content="Devoku">
-    <meta property="og:image" content="None/./">
+    <meta property="og:image" content="http://adaptivdesign.github.io/devoku//./">
     <meta name="apple-mobile-web-app-title" content="Devoku">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -68,6 +74,9 @@
   
   <body class="palette-primary-deep-purple palette-accent-light-purple">
     
+      
+      
+    
     <div class="backdrop">
       <div class="backdrop-paper"></div>
     </div>
@@ -93,16 +102,6 @@
       </div>
     </div>
     
-      
-      <div class="button button-twitter" role="button" aria-label="Twitter">
-        <a href="https://twitter.com/my-twitter-handle" title="@my-twitter-handle on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
-      </div>
-    
-    
-      
-      <div class="button button-github" role="button" aria-label="GitHub">
-        <a href="https://github.com/my-github-handle" title="@my-github-handle on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
-      </div>
     
     <div class="button button-search" role="button" aria-label="Search">
       <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
@@ -128,7 +127,7 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="/" class="project">
+  <a href="https://github.com/adaptivdesign/devoku" class="project">
     <div class="banner">
       
       <div class="name">
@@ -139,61 +138,76 @@
           </span>
         </strong>
         
+          <br>
+          adaptivdesign/devoku
+        
       </div>
     </div>
   </a>
   <div class="scrollable">
     <div class="wrapper">
       
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/adaptivdesign/devoku/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/adaptivdesign/devoku/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
       <div class="toc">
         <ul>
           
             
   <li>
-    <a class="current" title="Home" href=".">
-      Home
+    <a class="current" title="Devoku" href=".">
+      Devoku
     </a>
     
       
         
       
       
-        <ul>
+    
+  </li>
+
           
-            <li class="anchor">
-              <a title="Getting started" href="#getting-started">
-                Getting started
-              </a>
-            </li>
+            
+  <li>
+    <a class="" title="Getting started" href="getting-started/">
+      Getting started
+    </a>
+    
+  </li>
+
           
-        </ul>
-      
+            
+  <li>
+    <a class="" title="Commands" href="commands/">
+      Commands
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Custom Environment" href="custom-environment/">
+      Custom Environment
+    </a>
     
   </li>
 
           
         </ul>
-        
-          <hr>
-          <span class="section">The author</span>
-          <ul>
-            
-              
-              <li>
-                <a href="https://twitter.com/my-twitter-handle" target="_blank" title="@my-twitter-handle on Twitter">
-                  @my-twitter-handle on Twitter
-                </a>
-              </li>
-            
-            
-              
-              <li>
-                <a href="https://github.com/my-github-handle" target="_blank" title="@my-github-handle on GitHub">
-                  @my-github-handle on GitHub
-                </a>
-              </li>
-            
-          </ul>
         
       </div>
     </div>
@@ -203,71 +217,11 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="devoku">Devoku</h1>
+          <h1 id="devoku">Devoku<a class="headerlink" href="#devoku" title="Permanent link">#</a></h1>
 <p>Herokuish development environment for just about any project.</p>
-<h2 id="getting-started">Getting started</h2>
-<h3 id="prerequisites">Prerequisites</h3>
-<ul>
-<li>Up to date version of <a href="https://www.vagrantup.com/">Vagrant</a>.</li>
-<li>A project under Git version control.</li>
-<li>A valid Heroku project.</li>
-</ul>
-<h3 id="vagrantfile">Vagrantfile</h3>
-<p>Your Vagrantfile should contain the following:</p>
-<pre><code>Vagrant.configure(2) do |config|
-  config.vm.box = &quot;adaptivdesign/devoku&quot;
-  config.vm.synced_folder '.', '/vagrant'
-
-  ...
-
-  # Dyno http port
-  config.vm.network &quot;forwarded_port&quot;, guest: 8000, host: 8000
-  # S3 http port
-  config.vm.network &quot;forwarded_port&quot;, guest: 4569, host: 4569
-
-end
-</code></pre>
-
-<h3 id="using-devoku">Using Devoku</h3>
-<p>Once your Vagrant machine is provisioned, you will have an Ubuntu 16.04
-based machine, with the latest Docker version installed and access to
-the Devoku cli commands.</p>
-<pre><code>$ vagrant ssh
-$ cd /vagrant
-</code></pre>
-
-<h3 id="setup-environment-variables">Setup environment variables</h3>
-<p>The first thing you want to do is setup a new Devoku environment, this is
-a file containing environment variables required by your App. Devoku creates
-this file for you using the <code>devoku env new</code> command.</p>
-<pre><code>$ devoku env new
-$ devoku env print
-</code></pre>
-
-<h3 id="build-the-image">Build the image</h3>
-<p>If your build requires certain environment variables make sure to set them
-before building. Once this is done we can start to build our Herokuish Docker
-image.</p>
-<pre><code>$ devoku build
-</code></pre>
-
-<h3 id="setup-backing-services">Setup backing services</h3>
-<p>Before running the app, we need to ensure all backing services are running.
-Most apps will require a Postgres Database, so lets provide the service.
-Notice that when you created your environment, it automatically generated a
-<code>DATABASE_URL</code> for you. We are going to start a Postgres server and create an
-empty database with just the following commands:</p>
-<pre><code>$ devoku service postgres up
-$ devoku pg createdb
-</code></pre>
-
-<h3 id="run-your-app">Run your app</h3>
-<p>Everything is set, now simply run:</p>
-<pre><code>$ devoku web
-</code></pre>
-
-<p>This starts a single web dyno available at <a href="http://localhost:8000">http://localhost:8000</a></p>
           <aside class="copyright" role="note">
+            
+              Copyright (c) 2016 Raymond Reggers &ndash;
             
             Documentation built with
             <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
@@ -280,6 +234,31 @@ $ devoku pg createdb
           
             <footer class="footer">
               
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+    </div>
+    <div class="next">
+      
+        <a href="getting-started/" title="Getting started">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Getting started
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
             </footer>
           
         </div>
@@ -295,7 +274,7 @@ $ devoku pg createdb
     </main>
     <script>
       var base_url = '.';
-      var repo_id  = '';
+      var repo_id  = 'adaptivdesign/devoku';
     </script>
     <script src="./assets/javascripts/application-997097ee0c.js"></script>
     

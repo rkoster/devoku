@@ -2,8 +2,8 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Devoku\n\n\nHerokuish development environment for just about any project.\n\n\nGetting started\n\n\nPrerequisites\n\n\n\n\nUp to date version of \nVagrant\n.\n\n\nA project under Git version control.\n\n\nA valid Heroku project.\n\n\n\n\nVagrantfile\n\n\nYour Vagrantfile should contain the following:\n\n\nVagrant.configure(2) do |config|\n  config.vm.box = \nadaptivdesign/devoku\n\n  config.vm.synced_folder '.', '/vagrant'\n\n  ...\n\n  # Dyno http port\n  config.vm.network \nforwarded_port\n, guest: 8000, host: 8000\n  # S3 http port\n  config.vm.network \nforwarded_port\n, guest: 4569, host: 4569\n\nend\n\n\n\n\nUsing Devoku\n\n\nOnce your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.\n\n\n$ vagrant ssh\n$ cd /vagrant\n\n\n\n\nSetup environment variables\n\n\nThe first thing you want to do is setup a new Devoku environment, this is\na file containing environment variables required by your App. Devoku creates\nthis file for you using the \ndevoku env new\n command.\n\n\n$ devoku env new\n$ devoku env print\n\n\n\n\nBuild the image\n\n\nIf your build requires certain environment variables make sure to set them\nbefore building. Once this is done we can start to build our Herokuish Docker\nimage.\n\n\n$ devoku build\n\n\n\n\nSetup backing services\n\n\nBefore running the app, we need to ensure all backing services are running.\nMost apps will require a Postgres Database, so lets provide the service.\nNotice that when you created your environment, it automatically generated a\n\nDATABASE_URL\n for you. We are going to start a Postgres server and create an\nempty database with just the following commands:\n\n\n$ devoku service postgres up\n$ devoku pg createdb\n\n\n\n\nRun your app\n\n\nEverything is set, now simply run:\n\n\n$ devoku web\n\n\n\n\nThis starts a single web dyno available at \nhttp://localhost:8000", 
-            "title": "Home"
+            "text": "Devoku\n#\n\n\nHerokuish development environment for just about any project.", 
+            "title": "Devoku"
         }, 
         {
             "location": "/#devoku", 
@@ -11,44 +11,159 @@
             "title": "Devoku"
         }, 
         {
-            "location": "/#getting-started", 
+            "location": "/getting-started/", 
+            "text": "Getting started\n#\n\n\nPrerequisites\n#\n\n\n\n\nUp to date version of \nVagrant\n.\n\n\nA project under Git version control.\n\n\nA valid Heroku project.\n\n\n\n\nVagrantfile\n#\n\n\nYour Vagrantfile should contain the following:\n\n\nVagrant\n.\nconfigure\n(\n2\n)\n \ndo\n \n|\nconfig\n|\n\n  \nconfig\n.\nvm\n.\nbox\n \n=\n \nadaptivdesign/devoku\n\n  \nconfig\n.\nvm\n.\nsynced_folder\n \n.\n,\n \n/vagrant\n\n\n  \n...\n\n\n  \n# Dyno http port\n\n  \nconfig\n.\nvm\n.\nnetwork\n \nforwarded_port\n,\n \nguest\n:\n \n8000\n,\n \nhost\n:\n \n8000\n\n  \n# S3 http port\n\n  \nconfig\n.\nvm\n.\nnetwork\n \nforwarded_port\n,\n \nguest\n:\n \n4569\n,\n \nhost\n:\n \n4569\n\n\n\nend\n\n\n\n\n\n\nUsing Devoku\n#\n\n\nOnce your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.\n\n\n$ vagrant ssh\n$ \ncd\n /vagrant\n\n\n\n\n\nSetup environment variables\n#\n\n\nThe first thing you want to do is setup a new Devoku environment, this is\na file containing environment variables required by your App. Devoku creates\nthis file for you using the \ndevoku env new\n command.\n\n\n$ devoku env new\n$ devoku env print\n\n\n\n\n\nBuild the image\n#\n\n\nIf your build requires certain environment variables make sure to set them\nbefore building. Once this is done we can start to build our Herokuish Docker\nimage.\n\n\n$ devoku build\n\n\n\n\n\nSetup backing services\n#\n\n\nBefore running the app, we need to ensure all backing services are running.\nMost apps will require a Postgres Database, so lets provide the service.\nNotice that when you created your environment, it automatically generated a\n\nDATABASE_URL\n for you. We are going to start a Postgres server and create an\nempty database with just the following commands:\n\n\n$ devoku service postgres up\n$ devoku pg createdb\n\n\n\n\n\nRun your app\n#\n\n\nEverything is set, now simply run:\n\n\n$ devoku web\n\n\n\n\n\nThis starts a single web dyno available at \nhttp://localhost:8000", 
+            "title": "Getting started"
+        }, 
+        {
+            "location": "/getting-started/#getting-started", 
             "text": "", 
             "title": "Getting started"
         }, 
         {
-            "location": "/#prerequisites", 
+            "location": "/getting-started/#prerequisites", 
             "text": "Up to date version of  Vagrant .  A project under Git version control.  A valid Heroku project.", 
             "title": "Prerequisites"
         }, 
         {
-            "location": "/#vagrantfile", 
-            "text": "Your Vagrantfile should contain the following:  Vagrant.configure(2) do |config|\n  config.vm.box =  adaptivdesign/devoku \n  config.vm.synced_folder '.', '/vagrant'\n\n  ...\n\n  # Dyno http port\n  config.vm.network  forwarded_port , guest: 8000, host: 8000\n  # S3 http port\n  config.vm.network  forwarded_port , guest: 4569, host: 4569\n\nend", 
+            "location": "/getting-started/#vagrantfile", 
+            "text": "Your Vagrantfile should contain the following:  Vagrant . configure ( 2 )   do   | config | \n   config . vm . box   =   adaptivdesign/devoku \n   config . vm . synced_folder   . ,   /vagrant \n\n   ... \n\n   # Dyno http port \n   config . vm . network   forwarded_port ,   guest :   8000 ,   host :   8000 \n   # S3 http port \n   config . vm . network   forwarded_port ,   guest :   4569 ,   host :   4569  end", 
             "title": "Vagrantfile"
         }, 
         {
-            "location": "/#using-devoku", 
-            "text": "Once your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.  $ vagrant ssh\n$ cd /vagrant", 
+            "location": "/getting-started/#using-devoku", 
+            "text": "Once your Vagrant machine is provisioned, you will have an Ubuntu 16.04\nbased machine, with the latest Docker version installed and access to\nthe Devoku cli commands.  $ vagrant ssh\n$  cd  /vagrant", 
             "title": "Using Devoku"
         }, 
         {
-            "location": "/#setup-environment-variables", 
+            "location": "/getting-started/#setup-environment-variables", 
             "text": "The first thing you want to do is setup a new Devoku environment, this is\na file containing environment variables required by your App. Devoku creates\nthis file for you using the  devoku env new  command.  $ devoku env new\n$ devoku env print", 
             "title": "Setup environment variables"
         }, 
         {
-            "location": "/#build-the-image", 
+            "location": "/getting-started/#build-the-image", 
             "text": "If your build requires certain environment variables make sure to set them\nbefore building. Once this is done we can start to build our Herokuish Docker\nimage.  $ devoku build", 
             "title": "Build the image"
         }, 
         {
-            "location": "/#setup-backing-services", 
+            "location": "/getting-started/#setup-backing-services", 
             "text": "Before running the app, we need to ensure all backing services are running.\nMost apps will require a Postgres Database, so lets provide the service.\nNotice that when you created your environment, it automatically generated a DATABASE_URL  for you. We are going to start a Postgres server and create an\nempty database with just the following commands:  $ devoku service postgres up\n$ devoku pg createdb", 
             "title": "Setup backing services"
         }, 
         {
-            "location": "/#run-your-app", 
+            "location": "/getting-started/#run-your-app", 
             "text": "Everything is set, now simply run:  $ devoku web  This starts a single web dyno available at  http://localhost:8000", 
             "title": "Run your app"
+        }, 
+        {
+            "location": "/commands/", 
+            "text": "Full command reference.\n\n\n\n\nCheck your cwd\n\n\nMake sure you are executing your command in the right cwd, by default this is /vagrant.\n\n\n\n\nbuild\n#\n\n\nBuilds a Docker image based upon your latest commit.\n\n\n$ devoku build\n\n\n\n\n\nenv new\n#\n\n\nCreates a new environment, this will set environment variables for your App. By\ndefault it creates a randomly generated:\n\n\n\n\nDATABASE_URL\n\n\nREDIS_URL\n\n\nS3_BUCKET\n\n\n\n\n$ devoku env new\n\n\n\n\n\nenv set\n#\n\n\nAppend to the current environment.\n\n\n$ devoku env new \nVARIABLE\n=\nVALUE\n\n\n\n\n\n\nenv print\n#\n\n\nPrints out the current environment.\n\n\n$ devoku env print\n\n\n\n\n\nweb\n#\n\n\nRuns a web instance according to your Procfile. This immediately attaches to\nthe Docker container's log. This Docker container keeps running, until either:\n\n\n\n\nThe command is run again\n\n\nYou exit the docker container manually by running: \ndocker kill devoku-web\n\n\n\n\n$ devoku web\n\n\n\n\n\nworker\n#\n\n\nRuns a worker instance according to your Procfile. See the \ndevoku web\n command for\nmore information.\n\n\n$ devoku worker\n\n\n\n\n\nrun\n#\n\n\nRuns the given command inside a Docker container. You can use stdin and stdout for\nreading and writing.\n\n\n$ devoku run \nCOMMAND\n\n\n\n\n\n\nStarts an interactive shell inside a Docker container.\n\n\nshell\n#\n\n\n$ devoku shell\n\n\n\n\n\npg createdb\n#\n\n\nCreates the database as configured in your environment's \nDATABASE_URL\n.\n\n\n$ devoku pg createdb\n\n\n\n\n\npg dropdb\n#\n\n\nDrops the database as configured in your environment's \nDATABASE_URL\n.\n\n\n$ devoku pg dropdb\n\n\n\n\n\npg psql\n#\n\n\nStarts an interactive psql session against your the database nfigured in your environment's \nDATABASE_URL\n.\n\n\n$ devoku pg psql\n\n\n\n\n\nservice up\n#\n\n\nInstalls and runs the specified service. Valid choices are:\n\n\n\n\npostgres\n\n\nredis\n\n\ns3\n\n\n\n\n$ devoku service \nname\n up\n\n\n\n\n\nservice down\n#\n\n\nCompletely removes the specfied service.\n\n\n$ devoku service \nname\n down", 
+            "title": "Commands"
+        }, 
+        {
+            "location": "/commands/#build", 
+            "text": "Builds a Docker image based upon your latest commit.  $ devoku build", 
+            "title": "build"
+        }, 
+        {
+            "location": "/commands/#env-new", 
+            "text": "Creates a new environment, this will set environment variables for your App. By\ndefault it creates a randomly generated:   DATABASE_URL  REDIS_URL  S3_BUCKET   $ devoku env new", 
+            "title": "env new"
+        }, 
+        {
+            "location": "/commands/#env-set", 
+            "text": "Append to the current environment.  $ devoku env new  VARIABLE = VALUE", 
+            "title": "env set"
+        }, 
+        {
+            "location": "/commands/#env-print", 
+            "text": "Prints out the current environment.  $ devoku env print", 
+            "title": "env print"
+        }, 
+        {
+            "location": "/commands/#web", 
+            "text": "Runs a web instance according to your Procfile. This immediately attaches to\nthe Docker container's log. This Docker container keeps running, until either:   The command is run again  You exit the docker container manually by running:  docker kill devoku-web   $ devoku web", 
+            "title": "web"
+        }, 
+        {
+            "location": "/commands/#worker", 
+            "text": "Runs a worker instance according to your Procfile. See the  devoku web  command for\nmore information.  $ devoku worker", 
+            "title": "worker"
+        }, 
+        {
+            "location": "/commands/#run", 
+            "text": "Runs the given command inside a Docker container. You can use stdin and stdout for\nreading and writing.  $ devoku run  COMMAND   Starts an interactive shell inside a Docker container.", 
+            "title": "run"
+        }, 
+        {
+            "location": "/commands/#shell", 
+            "text": "$ devoku shell", 
+            "title": "shell"
+        }, 
+        {
+            "location": "/commands/#pg-createdb", 
+            "text": "Creates the database as configured in your environment's  DATABASE_URL .  $ devoku pg createdb", 
+            "title": "pg createdb"
+        }, 
+        {
+            "location": "/commands/#pg-dropdb", 
+            "text": "Drops the database as configured in your environment's  DATABASE_URL .  $ devoku pg dropdb", 
+            "title": "pg dropdb"
+        }, 
+        {
+            "location": "/commands/#pg-psql", 
+            "text": "Starts an interactive psql session against your the database nfigured in your environment's  DATABASE_URL .  $ devoku pg psql", 
+            "title": "pg psql"
+        }, 
+        {
+            "location": "/commands/#service-up", 
+            "text": "Installs and runs the specified service. Valid choices are:   postgres  redis  s3   $ devoku service  name  up", 
+            "title": "service up"
+        }, 
+        {
+            "location": "/commands/#service-down", 
+            "text": "Completely removes the specfied service.  $ devoku service  name  down", 
+            "title": "service down"
+        }, 
+        {
+            "location": "/custom-environment/", 
+            "text": "Devoku's environment management features serve 2 functions:\n\n\n\n\n\n\nQuickly create a new environment without having to figure out all variables over and over again.\n\n\n\n\n\n\nAllow customization specific to a development environment.\n\n\n\n\n\n\nIn this topic we will cover the environment template file, and some common scenario's and solutions to create your perfect development environment.\n\n\nTemplate file location\n#\n\n\nDuring execution of the \ndevoku env new\n command, Devoku looks for a template file named \n.env.template\n inside your cwd. If none is found, it will use the default template provided with Devoku.\n\n\nDefault template file\n#\n\n\nexport DATABASE_URL=postgres://\n$\nidentifier\n:\n$\nidentifier\n@localhost:5432/\n$\nunique\n\n\nexport REDIS_URL=redis://localhost:6379\n\n\nexport S3_BUCKET=\n$\nunique\n\n\nexport AWS_ACCESS_KEY_ID=\n$\nidentifier\n\n\nexport AWS_SECRET_ACCESS_KEY=\n$\nidentifier\n\n\n\n\n\n\nTemplate variables\n#\n\n\n\n\n$unique: a randomly generated string.\n\n\n$identifier: defaults to \ndevoku\n.\n\n\n$container_share_dir: path to the Docker volume for the cwd, defaults to \n/devoku/share\n.\n\n\n\n\nRuntime variables\n#\n\n\n\n\n$DEVOKU_CONTEXT: either \nrun\n or \nbuild\n.\n\n\n\n\nEscaping\n#\n\n\nTemplate files are interpreted using bash itself, so if your template files want to\nmake use of runtime variables and strings, these will need to be escaped as such:\n\n\n\\\n\\\n$\nDEVOKU_CONTEXT\n\\\n == \\\nrun\\\n\n\n\n\n\n\nExamples\n#\n\n\nMount cwd for live editing\n#\n\n\nif [ \\\n\\\n$\nDEVOKU_CONTEXT\n\\\n == \\\nrun\\\n ]; then\n\n\n  for path in \\\n$(\ncd\n \n$\ncontainer_share_dir\n/\n \n \nls\n \n-d\n \n*\n)\n; do\n\n\n    rm -rf /app/\\\n$\npath\n\n\n    ln -s \n$\ncontainer_share_dir\n/\\\n$\npath\n /app/\\\n$\npath\n\n\n  done\n\n\nfi", 
+            "title": "Custom Environment"
+        }, 
+        {
+            "location": "/custom-environment/#template-file-location", 
+            "text": "During execution of the  devoku env new  command, Devoku looks for a template file named  .env.template  inside your cwd. If none is found, it will use the default template provided with Devoku.", 
+            "title": "Template file location"
+        }, 
+        {
+            "location": "/custom-environment/#default-template-file", 
+            "text": "export DATABASE_URL=postgres:// $ identifier : $ identifier @localhost:5432/ $ unique  export REDIS_URL=redis://localhost:6379  export S3_BUCKET= $ unique  export AWS_ACCESS_KEY_ID= $ identifier  export AWS_SECRET_ACCESS_KEY= $ identifier", 
+            "title": "Default template file"
+        }, 
+        {
+            "location": "/custom-environment/#template-variables", 
+            "text": "$unique: a randomly generated string.  $identifier: defaults to  devoku .  $container_share_dir: path to the Docker volume for the cwd, defaults to  /devoku/share .", 
+            "title": "Template variables"
+        }, 
+        {
+            "location": "/custom-environment/#runtime-variables", 
+            "text": "$DEVOKU_CONTEXT: either  run  or  build .", 
+            "title": "Runtime variables"
+        }, 
+        {
+            "location": "/custom-environment/#escaping", 
+            "text": "Template files are interpreted using bash itself, so if your template files want to\nmake use of runtime variables and strings, these will need to be escaped as such:  \\ \\ $ DEVOKU_CONTEXT \\  == \\ run\\", 
+            "title": "Escaping"
+        }, 
+        {
+            "location": "/custom-environment/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/custom-environment/#mount-cwd-for-live-editing", 
+            "text": "if [ \\ \\ $ DEVOKU_CONTEXT \\  == \\ run\\  ]; then    for path in \\ $( cd   $ container_share_dir /     ls   -d   * ) ; do      rm -rf /app/\\ $ path      ln -s  $ container_share_dir /\\ $ path  /app/\\ $ path    done  fi", 
+            "title": "Mount cwd for live editing"
         }
     ]
 }
