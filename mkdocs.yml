@@ -5,14 +5,11 @@ site_url: http://adaptivdesign.github.io/devoku/
 
 theme: material
 
-# Repository
-repo_name: GitHub
-repo_url: https://github.com/adaptivdesign/devoku
-
 # Copyright
 copyright: Copyright (c) 2016 Raymond Reggers
 
 extra:
+  version: '0.1.0'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
